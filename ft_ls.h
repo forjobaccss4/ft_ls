@@ -7,10 +7,13 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "libft/libft.h"
-# define MAX_SPACES_BETWEEN 7
 # define SUM_OF_FILES num_of_files(open_and_ls())
+# define MAX_LENGTH len_for_sorted_array(open_and_ls())
 
-void				print_array_with_spaces(size_t len);
+void				swap_for_print_result(char **sorted_array, int calc_columns);
+int					calc_in_one_line_or_columns(void);
+void				ft_print_all_words(char **array);
+char				**array_with_spaces_and_words(void);
 size_t				len_for_sorted_array(char **array);
 void				ft_swap_strings(char **array, int i, int j);
 char				**ft_qsort_mode(char **array, int start, int end);
@@ -19,7 +22,7 @@ int					num_of_files(char **array);
 char				*ft_strjoinmode(char *s1, char *s2);
 char				**read_names(DIR *descriptor);
 char				**open_and_ls(void);
-char				**array_with_spaces(size_t len);
+char				**array_with_spaces(void);
 int					main(int argc, char **argv);
 
 #endif

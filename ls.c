@@ -80,6 +80,10 @@ int					main(int argc, char **argv)
 {
 	argc = 0;
 	if (!argv[1])
-		print_array_with_spaces(len_for_sorted_array(open_and_ls()));
+	{
+		
+		swap_for_print_result(array_with_spaces_and_words(), calc_in_one_line_or_columns());
+	}
+/*	system("leaks a.out");*/
 	return (0);
 }

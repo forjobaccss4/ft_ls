@@ -3,10 +3,10 @@ PATH_SRC = ./
 PATH_LIB = libft/libft.a
 
 CC = gcc
-CFLAGS = -o ft_ls -Wall -Wextra -Werror ./$(PATH_LIB) -I $(PATH_SRC)
+CFLAGS = -Wall -Wextra -Werror ./$(PATH_LIB) -I $(PATH_SRC)
 SRC = 			$(PATH_SRC)ls.c \
 				$(PATH_SRC)for_changes_in_array.c \
-				$(PATH_SRC)ft_qsort.c \
+				$(PATH_SRC)ft_qsort_and_print_ls.c \
 
 				
 
@@ -14,7 +14,7 @@ all: $(NAME)
 
 $(NAME): clean 
 
-	/bin/rm -f $(NAME)
+	/bin/rm -f a.out
 	$(CC) $(CFLAGS) $(SRC)
 
 clean:
