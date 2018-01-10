@@ -10,7 +10,8 @@
 # define SUM_OF_FILES num_of_files(open_and_ls())
 # define MAX_LENGTH len_for_sorted_array(open_and_ls())
 
-void				swap_for_print_result(char **sorted_array, int calc_columns);
+int					*calc_rows(int calc_columns);
+void				swap_for_print_result(char **sorted_array, int *calc_columns_rows);
 int					calc_in_one_line_or_columns(void);
 void				ft_print_all_words(char **array);
 char				**array_with_spaces_and_words(void);

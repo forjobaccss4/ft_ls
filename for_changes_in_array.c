@@ -108,32 +108,29 @@ char				**array_with_spaces_and_words(void)
 	return (arr_with_spaces_and_words);
 }
 
-int				calc_in_one_line_or_columns(void)
+int					calc_in_one_line_or_columns(void)
 {
-	unsigned long	screen_width;
-	double			division;
-	double			res;
-	int				words_in_one_line;
+	size_t			res;
+	double			min_cols;
+	size_t			result;
 
-	division = 2;
-	res = SUM_OF_FILES;
-	screen_width = size_of_screen();
-	while ((MAX_LENGTH * res) > screen_width)
-	{
-		if (screen_width < MAX_LENGTH)
-		{
-			words_in_one_line = 1;
-			return (words_in_one_line);
-		}
-		res = (SUM_OF_FILES / division);
-		division++;
-	}
-	words_in_one_line = res;
-	if ((res + 0.5) >= (words_in_one_line + 1))
-		words_in_one_line += 1;
+	min_cols = SUM_OF_FILES / 2.00;
+	result = min_cols;
+	res = size_of_screen() / MAX_LENGTH;
+	if ((min_cols + 0.5) >= (result + 1))
+		result = result + 1;
 	else
-		words_in_one_line = res;
-	return (words_in_one_line);
+		result = min_cols;
+	if (res > result)
+		res = result;
+	if (size_of_screen() < MAX_LENGTH)
+	{
+		res = 1;
+		return (res);
+	}
+	if ((MAX_LENGTH * SUM_OF_FILES) <= size_of_screen())
+		res = SUM_OF_FILES;
+	return (res);
 }
 
 

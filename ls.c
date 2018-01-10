@@ -79,10 +79,13 @@ char				**open_and_ls(void)
 int					main(int argc, char **argv)
 {
 	argc = 0;
+	int *array;
+	int i;
 	if (!argv[1])
 	{
-		
-		swap_for_print_result(array_with_spaces_and_words(), calc_in_one_line_or_columns());
+		i = calc_in_one_line_or_columns();
+		array = calc_rows(i);
+		swap_for_print_result(array_with_spaces_and_words(), array);
 	}
 /*	system("leaks a.out");*/
 	return (0);
