@@ -7,6 +7,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "libft/libft.h"
+# include <time.h>
 # define SUM_OF_FILES num_of_files(open_and_ls())
 # define MAX_LENGTH len_for_sorted_array(open_and_ls())
 

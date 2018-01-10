@@ -53,6 +53,10 @@ char		**ft_qsort_mode(char **array, int start, int end)
 
 void		ft_print_all_words(char **array)
 {
+	clock_t start, end;
+ 
+    start = clock();
+ 
 	size_t	i;
 	int		count;
 
@@ -64,6 +68,10 @@ void		ft_print_all_words(char **array)
 			ft_putchar(array[count][i++]);
 		count++;
 	}
+	end = clock();
+ 
+    printf("The above code block was executed in %.4f second(s)\n", ((double) end - start) / ((double) CLOCKS_PER_SEC));
+    
 }
 
 int			*calc_rows(int calc_columns)
