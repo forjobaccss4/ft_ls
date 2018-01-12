@@ -18,7 +18,6 @@ char	*ft_strtrim(char *s)
 	size_t	i;
 	size_t	a;
 	size_t	len;
-	char	*tmp;
 
 	str = NULL;
 	i = 0;

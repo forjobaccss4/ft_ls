@@ -16,10 +16,10 @@ void		ft_swap_strings(char **array, int i, int j)
 {
 	char *tmp;
 
-	tmp = NULL;
 	tmp = array[i];
 	array[i] = array[j];
 	array[j] = tmp;
+	tmp = NULL;
 }
 
 char		**ft_qsort_mode(char **array, int start, int end)
@@ -27,6 +27,7 @@ char		**ft_qsort_mode(char **array, int start, int end)
 	int		i;
 	int		j;
 	char	*middle;
+
 
 	i = start;
 	j = end;
@@ -53,54 +54,46 @@ char		**ft_qsort_mode(char **array, int start, int end)
 
 void		ft_print_all_words(char **array)
 {
-	clock_t start, end;
- 
-    start = clock();
- 
-	size_t	i;
 	int		count;
+	int		len;
+	int		max;
 
+	max = SUM_OF_FILES;
+	len = MAX_LENGTH;
 	count = 0;
-	while (count < SUM_OF_FILES)
+	while (count < max)
 	{
-		i = 0;
-		while (i < MAX_LENGTH)
-			ft_putchar(array[count][i++]);
+		write(1, array[count], len);
 		count++;
 	}
-	end = clock();
- 
-    printf("The above code block was executed in %.4f second(s)\n", ((double) end - start) / ((double) CLOCKS_PER_SEC));
-    
-}
+	free_double_array(array);
+ }
 
-int			*calc_rows(int calc_columns)
+int			*calc_rows(void)
 {
 	int		*ret_cals_rows;
-	int		calc;
+	int		sum;
 	int		rows;
+	int		calc_columns;
 
-	calc = SUM_OF_FILES / calc_columns;
-	rows = calc;
+	calc_columns = calc_in_one_line_or_columns();
+	sum = SUM_OF_FILES;
+	rows = sum / calc_columns;
 	ret_cals_rows = (int*)malloc(sizeof(int) * 2);
 	ret_cals_rows[0] = calc_columns;
-	if (calc_columns == SUM_OF_FILES)
+	if (calc_columns == sum)
 	{
 		ret_cals_rows[1] = 1;
 		return(ret_cals_rows);
 	}
-	if ((calc * (calc_columns - 1)) > calc)
+	if ((sum - (rows * (calc_columns - 1))) > rows)
 	{
 		rows++;
 		ret_cals_rows[1] = rows;
 		return (ret_cals_rows);
 	}
-	else if ((calc * (calc_columns - 1)) > calc)
-	{
-		rows += 1;
+	else
 		ret_cals_rows[1] = rows;
-		return (ret_cals_rows);
-	}
 	return (ret_cals_rows);
 }
 
@@ -110,28 +103,30 @@ void		swap_for_print_result(char **sorted_array, int *calc_columns_rows)
 	int		i;
 	int		j;
 	int		for_start_in_array;
+	int		sum;
 
-	j = 0;
-	for_start_in_array = 0;
+	sum = SUM_OF_FILES;
 	for_print_array = array_with_spaces();
-	if (calc_columns_rows[0] == SUM_OF_FILES)
+	if (calc_columns_rows[0] == sum)
 	{
 		ft_print_all_words(sorted_array);
 		return ;
 	}
+	j = 0;
+	for_start_in_array = 0;
 	while (for_start_in_array < calc_columns_rows[1])
 	{
 		i = 0;
-		while ((i + for_start_in_array) < SUM_OF_FILES)
+		while ((i + for_start_in_array) < sum)
 		{
-			for_print_array[j] = sorted_array[i + for_start_in_array];
+			for_print_array[j++] = sorted_array[i + for_start_in_array];
 			i += calc_columns_rows[1];
-			j++;
 		}
 		for_print_array[j - 1][MAX_LENGTH - 1] = '\n';
 		for_start_in_array++;
 	}
 	ft_print_all_words(for_print_array);
+	free(calc_columns_rows);
 }
 
 

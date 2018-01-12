@@ -39,73 +39,58 @@ char				*ft_strjoinmode(char *s1, char *s2)
 	return (s3);
 }
 
-size_t				len_for_sorted_array(char **array)
-{
-	size_t	len;
-	int		i;
-
-	i = 0;
-	len = ft_strlen(array[0]);
-	while (array[i])
-	{
-		if (len < ft_strlen(array[i]))
-			len = ft_strlen(array[i]);
-		i++;
-	}
-	while (len % 8)
-		len++;
-	return (len);
-}
-
 char				**array_with_spaces(void)
 {
 	char	**final_array_with_spaces;
-	char	*array_with_word;
 	int		i;
+	int		max;
+	int		sum;
 
 	i = 0;
+	max = MAX_LENGTH;
+	sum = SUM_OF_FILES;
 	final_array_with_spaces = NULL;
-	if (!(final_array_with_spaces = (char**)malloc(sizeof(char*) \
-		* (SUM_OF_FILES + 1))))
+	if (!(final_array_with_spaces = (char**)malloc(sizeof(char*) * (sum + 1))))
 		return (NULL);
 	i = 0;
-	while (i < SUM_OF_FILES)
+	while (i < sum)
 	{
-		if (!(array_with_word = (char*)malloc(sizeof(char) * MAX_LENGTH)))
+		if (!(final_array_with_spaces[i] = (char*)malloc(sizeof(char) * (max + 1))))
 			return (NULL);
-		final_array_with_spaces[i] = array_with_word;
 		i++;
 	}
-	final_array_with_spaces[SUM_OF_FILES] = 0;
+	final_array_with_spaces[sum] = 0;
 	return (final_array_with_spaces);
 }
 
-char				**array_with_spaces_and_words(void)
+char				**array_with_spaces_and_words(char **empty_array)
 {
 	int		i;
 	size_t	x;
-	char	**from_open;  /*need free*/
-	char	**arr_with_spaces_and_words;
+	size_t	max;
+	char	**from_open;
 
 	i = -1;
-	from_open = ft_qsort_mode(open_and_ls(), 0, SUM_OF_FILES - 1);
-	arr_with_spaces_and_words = array_with_spaces();
+	max = MAX_LENGTH;
+	from_open = ft_qsort_mode(open_directory(), 0, SUM_OF_FILES - 1);
 	while (from_open[++i])
 	{
 		x = 0;
-		while (x < MAX_LENGTH)
+		while (x < max)
 		{
 			while (x < ft_strlen(from_open[i]))
 			{
-				arr_with_spaces_and_words[i][x] = from_open[i][x];
+				empty_array[i][x] = from_open[i][x];
 				x++;
 			}
-			arr_with_spaces_and_words[i][x] = ' ';
+			empty_array[i][x] = ' ';
 			x++;
 		}
+		empty_array[i][x] = '\0';
 	}
-	arr_with_spaces_and_words[i - 1][x - 1] = '\n';
-	return (arr_with_spaces_and_words);
+	empty_array[i - 1][x - 1] = '\n';
+	free_double_array(from_open);
+	return (empty_array);
 }
 
 int					calc_in_one_line_or_columns(void)
@@ -132,15 +117,3 @@ int					calc_in_one_line_or_columns(void)
 		res = SUM_OF_FILES;
 	return (res);
 }
-
-
-
-
-
-
-
-
-
-
-
-
