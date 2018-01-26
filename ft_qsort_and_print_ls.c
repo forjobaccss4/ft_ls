@@ -28,11 +28,10 @@ char		**ft_qsort_mode(char **array, int start, int end)
 	int		j;
 	char	*middle;
 
-
 	i = start;
 	j = end;
 	if (end <= start)
-		return (0);
+		return (array);
 	middle = array[(i + j) / 2];
 	while (i <= j)
 	{
@@ -55,7 +54,7 @@ char		**ft_qsort_mode(char **array, int start, int end)
 void		ft_print_all_words(char **array)
 {
 	int		count;
-	int		len;
+	size_t	len;
 	int		max;
 
 	max = SUM_OF_FILES;
@@ -64,9 +63,10 @@ void		ft_print_all_words(char **array)
 	while (count < max)
 	{
 		write(1, array[count], len);
+		free(array[count]);
 		count++;
 	}
-	free_double_array(array);
+	free(array);
  }
 
 int			*calc_rows(void)
@@ -84,7 +84,7 @@ int			*calc_rows(void)
 	if (calc_columns == sum)
 	{
 		ret_cals_rows[1] = 1;
-		return(ret_cals_rows);
+		return (ret_cals_rows);
 	}
 	if ((sum - (rows * (calc_columns - 1))) > rows)
 	{
@@ -110,6 +110,7 @@ void		swap_for_print_result(char **sorted_array, int *calc_columns_rows)
 	if (calc_columns_rows[0] == sum)
 	{
 		ft_print_all_words(sorted_array);
+		free(calc_columns_rows);
 		return ;
 	}
 	j = 0;
@@ -128,20 +129,3 @@ void		swap_for_print_result(char **sorted_array, int *calc_columns_rows)
 	ft_print_all_words(for_print_array);
 	free(calc_columns_rows);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

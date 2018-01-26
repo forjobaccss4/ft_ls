@@ -12,7 +12,19 @@
 
 #include "ft_ls.h"
 
-size_t				max_len_of_word_in_array(char **array)
+int				ft_strlen_double_array(char **array)
+{
+	int i;
+
+	i = 0;
+	if (!array)
+		return (0);
+	while (array[i])
+		i++;
+	return (i); /*HERE IS A LEAK*/
+}
+
+size_t			max_len_of_word_in_array(char **array)
 {
 	size_t	len;
 	int		i;
@@ -26,14 +38,14 @@ size_t				max_len_of_word_in_array(char **array)
 		i++;
 	}
 	if (!(len % 8))
-		len++;	
+		len++;
 	while (len % 8)
 		len++;
 	free_double_array(array);
 	return (len);
 }
 
-unsigned long		size_of_screen(void)
+unsigned long	size_of_screen(void)
 {
 	struct ttysize	ws;
 	unsigned long	line_length;
@@ -44,7 +56,7 @@ unsigned long		size_of_screen(void)
 	return (line_length);
 }
 
-int					sum_of_files(char **array)
+int				sum_of_files(char **array)
 {
 	int	count;
 
@@ -53,4 +65,21 @@ int					sum_of_files(char **array)
 		count++;
 	free_double_array(array);
 	return (count);
+}
+
+char			*joinmode_helper(char *stat_string, char *splited_saved_string_all)
+{
+	char	*tmp;
+
+	if (stat_string)
+	{
+		tmp = ft_strdup(stat_string);
+		free(stat_string);
+		stat_string = ft_strjoinmode(tmp, splited_saved_string_all);
+		free(tmp);
+		return (stat_string);
+	}
+	else
+		stat_string = ft_strdup(splited_saved_string_all);
+	return (stat_string);
 }

@@ -15,9 +15,13 @@
 void	free_double_array(char **need_free)
 {
 	int i;
+	int	len;
 
 	i = 0;
-	while (need_free[i])
+	if (!need_free)
+		return ;
+	len = ft_strlen_double_array(need_free);
+	while (i < len)
 	{
 		free(need_free[i]);
 		i++;

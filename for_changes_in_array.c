@@ -6,7 +6,7 @@
 /*   By: vsarapin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/04 11:01:01 by vsarapin          #+#    #+#             */
-/*   Updated: 2018/01/05 19:37:30 by vsarapin         ###   ########.fr       */
+/*   Updated: 2018/01/15 12:35:09 by vsarapin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,24 @@ char				**array_with_spaces(void)
 {
 	char	**final_array_with_spaces;
 	int		i;
-	int		max;
+	size_t	max;
 	int		sum;
 
-	i = 0;
 	max = MAX_LENGTH;
 	sum = SUM_OF_FILES;
-	final_array_with_spaces = NULL;
 	if (!(final_array_with_spaces = (char**)malloc(sizeof(char*) * (sum + 1))))
+	{
+		free(final_array_with_spaces);
 		return (NULL);
+	}
 	i = 0;
 	while (i < sum)
 	{
 		if (!(final_array_with_spaces[i] = (char*)malloc(sizeof(char) * (max + 1))))
+		{
+			free_double_array(final_array_with_spaces);
 			return (NULL);
+		}
 		i++;
 	}
 	final_array_with_spaces[sum] = 0;
@@ -72,7 +76,7 @@ char				**array_with_spaces_and_words(char **empty_array)
 
 	i = -1;
 	max = MAX_LENGTH;
-	from_open = ft_qsort_mode(open_directory(), 0, SUM_OF_FILES - 1);
+	from_open = ft_qsort_mode(open_directory_current_or_print_error(), 0, SUM_OF_FILES - 1);
 	while (from_open[++i])
 	{
 		x = 0;
