@@ -20,7 +20,7 @@ void	free_double_array(char **need_free)
 	i = 0;
 	if (!need_free)
 		return ;
-	len = ft_strlen_double_array(need_free);
+	len = len_d_arr(need_free);
 	while (i < len)
 	{
 		free(need_free[i]);

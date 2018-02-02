@@ -39,15 +39,32 @@ char				*ft_strjoinmode(char *s1, char *s2)
 	return (s3);
 }
 
-char				**array_with_spaces(void)
+char			*joinmode_helper(char *stat_string, char *splited_saved_string_all)
+{
+	char	*tmp;
+
+	if (stat_string)
+	{
+		tmp = ft_strdup(stat_string);
+		free(stat_string);
+		stat_string = ft_strjoinmode(tmp, splited_saved_string_all);
+		free(tmp);
+		return (stat_string);
+	}
+	else
+		stat_string = ft_strdup(splited_saved_string_all);
+	return (stat_string);
+}
+
+char				**arr_with_spaces(char *dir)
 {
 	char	**final_array_with_spaces;
 	int		i;
 	size_t	max;
 	int		sum;
 
-	max = MAX_LENGTH;
-	sum = SUM_OF_FILES;
+	max = max_len_of_word_in_array(save_dir_none_flags(dir));
+	sum = sum_of_files_in_dir_non_all_flag(dir);
 	if (!(final_array_with_spaces = (char**)malloc(sizeof(char*) * (sum + 1))))
 	{
 		free(final_array_with_spaces);
@@ -67,16 +84,18 @@ char				**array_with_spaces(void)
 	return (final_array_with_spaces);
 }
 
-char				**array_with_spaces_and_words(char **empty_array)
+char				**sorted_array_with_files(char **empty_array, char *dir)
 {
 	int		i;
 	size_t	x;
 	size_t	max;
+	int 	sum;
 	char	**from_open;
 
 	i = -1;
-	max = MAX_LENGTH;
-	from_open = ft_qsort_mode(open_directory_current_or_print_error(), 0, SUM_OF_FILES - 1);
+	max = max_len_of_word_in_array(save_dir_none_flags(dir));
+	sum = sum_of_files_in_dir_non_all_flag(dir);
+	from_open = ft_qsort_mode(save_dir_none_flags(dir), 0, sum - 1);
 	while (from_open[++i])
 	{
 		x = 0;
@@ -95,29 +114,4 @@ char				**array_with_spaces_and_words(char **empty_array)
 	empty_array[i - 1][x - 1] = '\n';
 	free_double_array(from_open);
 	return (empty_array);
-}
-
-int					calc_in_one_line_or_columns(void)
-{
-	size_t			res;
-	double			min_cols;
-	size_t			result;
-
-	min_cols = SUM_OF_FILES / 2.00;
-	result = min_cols;
-	res = size_of_screen() / MAX_LENGTH;
-	if ((min_cols + 0.5) >= (result + 1))
-		result = result + 1;
-	else
-		result = min_cols;
-	if (res > result)
-		res = result;
-	if (size_of_screen() < MAX_LENGTH)
-	{
-		res = 1;
-		return (res);
-	}
-	if ((MAX_LENGTH * SUM_OF_FILES) <= size_of_screen())
-		res = SUM_OF_FILES;
-	return (res);
 }

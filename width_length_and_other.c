@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-int				ft_strlen_double_array(char **array)
+int				len_d_arr(char **array)
 {
 	int i;
 
@@ -67,19 +67,21 @@ int				sum_of_files(char **array)
 	return (count);
 }
 
-char			*joinmode_helper(char *stat_string, char *splited_saved_string_all)
+int		sum_of_files_in_dir_non_all_flag(char *dir)
 {
-	char	*tmp;
+	DIR				*open;
+	struct dirent	*read;
+	int				counter_of_files;
 
-	if (stat_string)
+	counter_of_files = 0;
+	if (!(open = opendir(dir)))
+		return (counter_of_files);
+	while ((read = readdir(open)))
 	{
-		tmp = ft_strdup(stat_string);
-		free(stat_string);
-		stat_string = ft_strjoinmode(tmp, splited_saved_string_all);
-		free(tmp);
-		return (stat_string);
+		if (!ft_strcmp(read->d_name, ".") || !ft_strcmp(read->d_name, "..") \
+		|| read->d_name[0] == '.')
+			continue ;
+		counter_of_files++;
 	}
-	else
-		stat_string = ft_strdup(splited_saved_string_all);
-	return (stat_string);
+	return (counter_of_files);
 }

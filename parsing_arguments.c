@@ -11,8 +11,10 @@ char		**find_possible_options(char **string_from_term)
 	i = 0;
 	save_options = NULL;
 	splited_save_options = NULL;
+	if (!string_from_term)
+		return (NULL);
 	while (string_from_term[i] \
-		&&string_from_term[i][0] == '-' \
+		&& string_from_term[i][0] == '-' \
 		&& string_from_term[i][1] != '\0' \
 		&& ft_strcmp(string_from_term[i], "--") != 0)
 	{
@@ -62,6 +64,36 @@ char		**valid_opt_or_not(char **possible_options)
 		}
 	}
 	return (possible_options);
+}
+
+/*Ищет совпадения одного массива в другом и удаляет их. Нужно чтбоы убрать опции из строки. Если опций нет то возвращается вся строка. 
+Если там только опции то тоже вернется NULL*/
+char		**coinc_in_double_array(char **remove_this_opts, char **remove_from)
+{
+	char	*return_this;
+	char	**returned;
+	int 	i;
+
+	return_this = NULL;
+	if (!remove_from)
+		return (NULL);
+	if (!remove_this_opts)
+		return (remove_from);
+	i = 0;
+	while (remove_from[i] && remove_from[i][0] == '-' && remove_from[i][1] != '\0'\
+		&& ft_strcmp(remove_from[i], "--"))
+		i++;
+	while (remove_from[i])
+	{
+		return_this = joinmode_helper(return_this, remove_from[i]);
+		i++;
+	}
+	returned = ft_strsplit(return_this, '\n');
+	free(return_this);
+	if (len_d_arr(remove_this_opts) == \
+		len_d_arr(remove_from))
+		return (NULL);
+	return (returned);
 }
 
 /*Убираем с строки опции чтоб потом парсить дальше и убираем -- с строки с консоли, если их нет, то  убираем -- с строки с консоли*/
