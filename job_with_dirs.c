@@ -30,10 +30,7 @@ char	**save_dir_none_flags(char *dir)
 	DIR		*open;
 	char	*read_array;
 	char	**for_splitted_array;
-	if (!(open = opendir(dir)))
-	{
-		write(1, "\n\n", 2); /*ATTENTION*/
-	}
+	open = opendir(dir);
 	read_array = read_names(open);
 	for_splitted_array = split_read_array(read_array);
 	closedir(open);
@@ -49,7 +46,7 @@ char				*read_names(DIR *descriptor)
 	while ((read = readdir(descriptor)))
 	{
 		if (!ft_strcmp(read->d_name, ".") || !ft_strcmp(read->d_name, "..") \
-		|| read->d_name[0] == '.')
+				|| read->d_name[0] == '.')
 			continue ;
 		array = joinmode_helper(array, read->d_name);
 	}

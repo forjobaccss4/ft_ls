@@ -111,7 +111,6 @@ char				**sorted_array_with_files(char **empty_array, char *dir)
 		}
 		empty_array[i][x] = '\0';
 	}
-	empty_array[i - 1][x - 1] = '\n';
 	free_double_array(from_open);
 	return (empty_array);
 }

@@ -81,12 +81,12 @@ char	**remove_errors(char **found_errors, char **dirs)
 {
 	char	**without_errors_array;
 
-	if (!found_errors || !dirs)
-		return (NULL);
+	if (!found_errors)
+		return (dirs);
 	if (len_d_arr(dirs) == len_d_arr(found_errors))
 		return (NULL);
 	without_errors_array = (char**)malloc(sizeof(char*) * \
-		(len_d_arr(dirs) - len_d_arr(found_errors)) + 1);
+		((len_d_arr(dirs) - len_d_arr(found_errors)) + 1));
 	without_errors_array = rem_er_helper(found_errors, dirs, without_errors_array);
 	return (without_errors_array);
 }
@@ -116,7 +116,7 @@ int		treatment_of_errors(char **string_from_term)
 		i++;
 	}
 	free_double_array(errors);
-	return (len);
+	return (1);
 }
 
 

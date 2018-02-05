@@ -30,7 +30,7 @@ size_t			max_len_of_word_in_array(char **array)
 	int		i;
 
 	i = 0;
-	len = ft_strlen(array[0]);
+	len = 0;
 	while (array[i])
 	{
 		if (len < ft_strlen(array[i]))

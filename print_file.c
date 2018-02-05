@@ -17,8 +17,8 @@ void		print_result(char **sorted_array, int *calc_columns_rows, char *dir)
 		return ;
 	}
 	j = 0;
-	for_start_in_array = 0;
-	while (for_start_in_array < calc_columns_rows[1])
+	for_start_in_array = -1;
+	while (++for_start_in_array < calc_columns_rows[1])
 	{
 		i = 0;
 		while ((i + for_start_in_array) < sum)
@@ -27,7 +27,6 @@ void		print_result(char **sorted_array, int *calc_columns_rows, char *dir)
 			i += calc_columns_rows[1];
 		}
 		for_print_array[j - 1][max_len_of_word_in_array(save_dir_none_flags(dir)) - 1] = '\n';
-		for_start_in_array++;
 	}
 	ft_print_all_files(for_print_array, dir);
 	free(calc_columns_rows);
@@ -51,13 +50,13 @@ void		ft_print_all_files(char **array, char *dir)
 	free(array);
  }
 
-void	print_all_in_dirs_none_opts(char **dirs, char **string_from_term)
+void	print_all_in_dirs_none_opts(char **dirs, char **term, int errors)
 {
 	int i;
 	int len_of_dirs;
 
 	len_of_dirs = len_d_arr(dirs);
-	if (!string_from_term)
+	if (!term)
 	{
 		print_result(sorted_array_with_files(arr_with_spaces("."), "."), \
 			calc_rows_and_columns("."), ".");
@@ -69,6 +68,7 @@ void	print_all_in_dirs_none_opts(char **dirs, char **string_from_term)
 		i = -1;
 		while (dirs[++i] && i < len_of_dirs - 1)
 		{
+
 			write(1, dirs[i], ft_strlen(dirs[i]));
 			write(1, ":\n", 2);
 			print_result(sorted_array_with_files(arr_with_spaces(dirs[i]), dirs[i]),\
@@ -79,6 +79,13 @@ void	print_all_in_dirs_none_opts(char **dirs, char **string_from_term)
 		write(1, ":\n", 2);
 		print_result(sorted_array_with_files(arr_with_spaces(dirs[i]), dirs[i]),\
 						 calc_rows_and_columns(dirs[i]), dirs[i]);
+	}
+	else if (len_of_dirs == 1 && errors)
+	{
+		write(1, dirs[0], ft_strlen(dirs[0]));
+		write(1, ":\n", 2);
+		print_result(sorted_array_with_files(arr_with_spaces(dirs[0]), dirs[0]),\
+		 calc_rows_and_columns(dirs[0]), dirs[0]);
 	}
 	else if (len_of_dirs == 1)
 		print_result(sorted_array_with_files(arr_with_spaces(dirs[0]), dirs[0]),\
