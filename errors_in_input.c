@@ -38,7 +38,7 @@ char		**find_errors_in_input(char **cleared_string_from_opts)
 	save_error_input = NULL;
 	while (cleared_string_from_opts[i])
 	{
-		if (stat(cleared_string_from_opts[i], &buf) == -1)
+		if (stat(cleared_string_from_opts[i], &buf) && lstat(cleared_string_from_opts[i], &buf))
 			save_error_input = joinmode_helper(save_error_input, cleared_string_from_opts[i]);
 		i++;
 	}
@@ -96,7 +96,6 @@ int		treatment_of_errors(char **string_from_term)
 {
 	int 	len;
 	int 	i;
-	char	**errors;
 	char	**options;
 	char	**found_err_in_input;
 
@@ -106,16 +105,16 @@ int		treatment_of_errors(char **string_from_term)
 	if (!found_err_in_input)
 		return (0);
 	len = len_d_arr(found_err_in_input);
-	errors = ft_qsort_mode(found_err_in_input, 0, len - 1);
+	ft_qsort_mode(found_err_in_input, 0, len - 1);
 	i = 0;
 	while (i < len)
 	{
 		ft_putstr("ls:");
 		ft_putchar(' ');
-		perror(errors[i]);
+		perror(found_err_in_input[i]);
 		i++;
 	}
-	free_double_array(errors);
+	free_double_array(found_err_in_input);
 	return (1);
 }
 

@@ -20,15 +20,16 @@ char				*ft_strjoinmode(char *s1, char *s2)
 	size_t		i;
 	size_t		j;
 
-	j = 0;
-	i = 0;
-	while (s1[i])
-		i++;
-	while (s2[j])
-		j++;
+	j = ft_strlen(s1);
+	i = ft_strlen(s2);
 	if (!s1 || !s2 || !(s3 = (char*)malloc(sizeof(char) * (i + j + 2))))
 		return (NULL);
 	tmp = s3;
+/*	tmp = ft_strdup(s1);
+	tmp[ft_strlen(s1)] = '\n';
+	tmd = ++tmp;
+	tmd = ft_strdup(s2);
+	tmd[ft_strlen(s2)] = '\0';*/
 	while (*s1 != '\0')
 		*tmp++ = *s1++;
 	*tmp = '\n';
@@ -56,61 +57,59 @@ char			*joinmode_helper(char *stat_string, char *splited_saved_string_all)
 	return (stat_string);
 }
 
-char				**arr_with_spaces(char *dir)
+char				**arr_with_spaces(char **array)
 {
 	char	**final_array_with_spaces;
 	int		i;
 	size_t	max;
 	int		sum;
 
-	max = max_len_of_word_in_array(save_dir_none_flags(dir));
-	sum = sum_of_files_in_dir_non_all_flag(dir);
-	if (!(final_array_with_spaces = (char**)malloc(sizeof(char*) * (sum + 1))))
-	{
-		free(final_array_with_spaces);
+	max = max_len_of_word_in_array(array);
+	if (!(sum = sum_of_files(array)))
 		return (NULL);
-	}
+	if (!(final_array_with_spaces = (char**)malloc(sizeof(char*) * (sum + 1))))
+		return (NULL);
 	i = 0;
 	while (i < sum)
 	{
 		if (!(final_array_with_spaces[i] = (char*)malloc(sizeof(char) * (max + 1))))
-		{
-			free_double_array(final_array_with_spaces);
 			return (NULL);
-		}
 		i++;
 	}
 	final_array_with_spaces[sum] = 0;
 	return (final_array_with_spaces);
 }
 
-char				**sorted_array_with_files(char **empty_array, char *dir)
+char				**sorted_array_with_files(char **array, char **empty_array)
 {
 	int		i;
 	size_t	x;
 	size_t	max;
 	int 	sum;
-	char	**from_open;
 
 	i = -1;
-	max = max_len_of_word_in_array(save_dir_none_flags(dir));
-	sum = sum_of_files_in_dir_non_all_flag(dir);
-	from_open = ft_qsort_mode(save_dir_none_flags(dir), 0, sum - 1);
-	while (from_open[++i])
+	max = max_len_of_word_in_array(array);
+	sum = sum_of_files(array);
+	if (!sum)
+		return (NULL);
+	while (array[++i])
 	{
-		x = 0;
-		while (x < max)
+		x = -1;
+		while (++x < max)
 		{
-			while (x < ft_strlen(from_open[i]))
+			while (x < ft_strlen(array[i]))
 			{
-				empty_array[i][x] = from_open[i][x];
+				empty_array[i][x] = array[i][x];
 				x++;
 			}
 			empty_array[i][x] = ' ';
-			x++;
 		}
 		empty_array[i][x] = '\0';
 	}
-	free_double_array(from_open);
+	empty_array[i - 1][x - 1] = '\n';
 	return (empty_array);
 }
+
+
+
+

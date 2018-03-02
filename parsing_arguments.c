@@ -83,6 +83,8 @@ char		**coinc_in_double_array(char **remove_this_opts, char **remove_from)
 	while (remove_from[i] && remove_from[i][0] == '-' && remove_from[i][1] != '\0'\
 		&& ft_strcmp(remove_from[i], "--"))
 		i++;
+	if (!remove_from[i])
+		return (NULL);
 	while (remove_from[i])
 	{
 		return_this = joinmode_helper(return_this, remove_from[i]);
@@ -90,9 +92,6 @@ char		**coinc_in_double_array(char **remove_this_opts, char **remove_from)
 	}
 	returned = ft_strsplit(return_this, '\n');
 	free(return_this);
-	if (len_d_arr(remove_this_opts) == \
-		len_d_arr(remove_from))
-		return (NULL);
 	return (returned);
 }
 
@@ -102,6 +101,8 @@ char		**remove_opt_from_string_input(char **poss_opt, char **string_from_term)
 	char	**saved_string_with_end_of_opt;
 	char	**split_save_string;
 
+	saved_string_with_end_of_opt = NULL;
+	split_save_string = NULL;
 	saved_string_with_end_of_opt = coinc_in_double_array(poss_opt, string_from_term);
 	split_save_string = remove_end_of_options(saved_string_with_end_of_opt);
 	return (split_save_string);

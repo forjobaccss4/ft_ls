@@ -8,15 +8,14 @@ char	**looking_for_dirs(char **without_opts)
 	char		*save_dirs;
 	char		**split_dirs;
 
-	i = 0;
+	i = -1;
 	save_dirs = NULL;
 	if (!without_opts)
 		return (NULL);
-	while (without_opts[i])
+	while (without_opts[++i])
 	{
 		if (!stat(without_opts[i], &buf) && S_ISDIR(buf.st_mode))
 			save_dirs = joinmode_helper(save_dirs, without_opts[i]);
-		i++;
 	}
 	if (!save_dirs)
 		return (NULL);
@@ -25,15 +24,18 @@ char	**looking_for_dirs(char **without_opts)
 	return (split_dirs);
 }
 
-char	**save_dir_none_flags(char *dir)
+char	**save_dir_none_flags(char *dir, int sort)
 {
 	DIR		*open;
 	char	*read_array;
 	char	**for_splitted_array;
-	open = opendir(dir);
+
+	if (!(open = opendir(dir)))
+		return (NULL);
 	read_array = read_names(open);
 	for_splitted_array = split_read_array(read_array);
 	closedir(open);
+	return_t_r_array(sort, for_splitted_array, dir);
 	return (for_splitted_array);
 }
 

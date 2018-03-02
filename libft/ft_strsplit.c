@@ -62,7 +62,7 @@ char				**ft_strsplit(char const *s, char c)
 	char	**num_of_arr;
 	int		i;
 	int		w_in;
-	int		w_count;
+	int 	w_count;
 
 	i = 0;
 	w_in = 0;

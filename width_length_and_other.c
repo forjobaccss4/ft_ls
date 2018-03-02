@@ -31,6 +31,11 @@ size_t			max_len_of_word_in_array(char **array)
 
 	i = 0;
 	len = 0;
+	if (!array)
+	{
+		len = 1;
+		return (len);
+	}
 	while (array[i])
 	{
 		if (len < ft_strlen(array[i]))
@@ -41,7 +46,6 @@ size_t			max_len_of_word_in_array(char **array)
 		len++;
 	while (len % 8)
 		len++;
-	free_double_array(array);
 	return (len);
 }
 
@@ -61,9 +65,10 @@ int				sum_of_files(char **array)
 	int	count;
 
 	count = 0;
+	if (!array)
+		return (count);
 	while (array[count])
 		count++;
-	free_double_array(array);
 	return (count);
 }
 
@@ -83,5 +88,6 @@ int		sum_of_files_in_dir_non_all_flag(char *dir)
 			continue ;
 		counter_of_files++;
 	}
+	closedir(open);
 	return (counter_of_files);
 }
