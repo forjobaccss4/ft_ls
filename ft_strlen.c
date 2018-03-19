@@ -1,39 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   r_sort.c                                           :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsarapin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/15 11:15:13 by vsarapin          #+#    #+#             */
-/*   Updated: 2018/03/15 11:15:17 by vsarapin         ###   ########.fr       */
+/*   Created: 2017/10/31 16:26:08 by vsarapin          #+#    #+#             */
+/*   Updated: 2017/11/13 16:26:42 by vsarapin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		r_swap(char **array, int i, int j)
+size_t		ft_strlen(const char *str)
 {
-	char *tmp;
+	size_t		i;
 
-	tmp = array[i];
-	array[i] = array[j];
-	array[j] = tmp;
-	tmp = NULL;
-}
-
-char		**r_sort(char **array)
-{
-	int		start;
-	int		end;
-
-	start = 0;
-	end = len_d_arr(array) - 1;
-	while (start <= end)
-	{
-		r_swap(array, start, end);
-		start++;
-		end--;
-	}
-	return (array);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }

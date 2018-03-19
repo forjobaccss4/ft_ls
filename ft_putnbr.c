@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   r_sort.c                                           :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsarapin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/15 11:15:13 by vsarapin          #+#    #+#             */
-/*   Updated: 2018/03/15 11:15:17 by vsarapin         ###   ########.fr       */
+/*   Created: 2017/11/13 13:22:05 by vsarapin          #+#    #+#             */
+/*   Updated: 2017/11/17 13:21:39 by vsarapin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		r_swap(char **array, int i, int j)
+void	ft_putnbr(int n)
 {
-	char *tmp;
-
-	tmp = array[i];
-	array[i] = array[j];
-	array[j] = tmp;
-	tmp = NULL;
-}
-
-char		**r_sort(char **array)
-{
-	int		start;
-	int		end;
-
-	start = 0;
-	end = len_d_arr(array) - 1;
-	while (start <= end)
+	if (n == -2147483648)
 	{
-		r_swap(array, start, end);
-		start++;
-		end--;
+		ft_putstr("-2147483648");
 	}
-	return (array);
+	else if (n < 0)
+	{
+		ft_putchar('-');
+		ft_putnbr(-n);
+	}
+	else if (n >= 10)
+	{
+		ft_putnbr(n / 10);
+		ft_putchar((n % 10) + '0');
+	}
+	else
+		ft_putchar(n + '0');
 }

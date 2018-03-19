@@ -21,7 +21,7 @@ int				len_d_arr(char **array)
 		return (0);
 	while (array[i])
 		i++;
-	return (i); /*HERE IS A LEAK*/
+	return (i);
 }
 
 size_t			max_len_of_word_in_array(char **array)
@@ -72,7 +72,7 @@ int				sum_of_files(char **array)
 	return (count);
 }
 
-int		sum_of_files_in_dir_non_all_flag(char *dir)
+int				sum_of_files_in_dir_non_all_flag(char *dir)
 {
 	DIR				*open;
 	struct dirent	*read;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   for_a.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsarapin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/15 10:56:02 by vsarapin          #+#    #+#             */
+/*   Updated: 2018/03/15 10:56:11 by vsarapin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 char	**for_a_arr(char *dir, int sort)
@@ -16,31 +28,48 @@ char	**for_a_arr(char *dir, int sort)
 char	**read_names_for_a(DIR *descriptor)
 {
 	struct dirent	*read;
-	char			*array;
+	t_lst			*array;
 	char			**splited;
 
 	array = NULL;
 	splited = NULL;
 	while ((read = readdir(descriptor)))
-		array = joinmode_helper(array, read->d_name);
-	splited = ft_strsplit(array, '\n');
-	free(array);
+		array = joinmode_list(array, read->d_name);
+	splited = splited_arr(array);
 	return (splited);
 }
 
-void	print_no_l_opt(char	**for_print, char *dir, int trigger, char **opts)
+void	print_no_l_opt(char **for_print, char *dir, int trigger)
 {
 	if (!trigger)
-		print_files_after_errors(sorted_array_with_files(for_print,
-			arr_with_spaces(for_print)),
-	calc_rows_and_columns_for_files(for_print));
+		print_no_l_opt_tr_zero(for_print, dir);
 	if (trigger)
+		print_no_l_opt_tr_one(for_print, dir);
+}
+
+void	ft_print_one_flag(char **array, char *dir, int trg)
+{
+	int count;
+
+	count = -1;
+	if (!trg)
+		print_one_flag_trg_zero(array, dir, count);
+	if (trg)
+		print_one_flag_trg_one(array, dir, count);
+}
+
+void	print_one_opt(char **fls, char **opts)
+{
+	int counter;
+
+	counter = -1;
+	if (fls && fls[0])
 	{
-		write (1, "\n", 1);
-		write(1, dir, ft_strlen(dir));
-		write(1, ":\n", 2);
-		print_result(sorted_array_with_files(for_print,
-			arr_with_spaces(for_print)),
-		calc_rows_and_columns_for_files(for_print), dir, opts);
+		return_t_r_array(kind_of_srt(opts), fls, ".");
+		while (fls[++counter])
+		{
+			ft_putstr(fls[counter]);
+			write(1, "\n", 1);
+		}
 	}
 }

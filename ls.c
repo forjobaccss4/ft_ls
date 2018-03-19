@@ -12,10 +12,10 @@
 
 #include "ft_ls.h"
 
-int					main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	int		i;
-	char	*save_from_input;
+	t_lst	*save_from_input;
 	char	**splited_string_from_input;
 
 	i = 0;
@@ -23,9 +23,17 @@ int					main(int argc, char **argv)
 	save_from_input = NULL;
 	splited_string_from_input = NULL;
 	while (argv[++i])
-		save_from_input = joinmode_helper(save_from_input, argv[i]);
+	{
+		if (!ft_strcmp(argv[i], ""))
+		{
+			save_from_input = joinmode_list(save_from_input, "");
+			continue ;
+		}
+		save_from_input = joinmode_list(save_from_input, argv[i]);
+	}
 	if (save_from_input)
-		splited_string_from_input = ft_strsplit(save_from_input, '\n');
-	cheking_variants(splited_string_from_input);
+		splited_string_from_input = splited_arr(save_from_input);
+	first_func(splited_string_from_input);
+	free_double_array(splited_string_from_input);
 	return (0);
 }

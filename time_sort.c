@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   time_sort.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsarapin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/15 11:16:28 by vsarapin          #+#    #+#             */
+/*   Updated: 2018/03/15 11:16:33 by vsarapin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 void		ft_swap_ints(long **array, int i, int j)
@@ -10,7 +22,7 @@ void		ft_swap_ints(long **array, int i, int j)
 	tmp = NULL;
 }
 
-long		**time_sort(char **array, long **time_arr, int start, int end)
+void		time_sort(char **array, long **time_arr, int start, int end)
 {
 	int		i;
 	int		j;
@@ -19,7 +31,7 @@ long		**time_sort(char **array, long **time_arr, int start, int end)
 	i = start;
 	j = end;
 	if (end <= start)
-		return (0);
+		return ;
 	middle = time_arr[(i + j) / 2];
 	while (i <= j)
 	{
@@ -37,15 +49,14 @@ long		**time_sort(char **array, long **time_arr, int start, int end)
 	}
 	time_sort(array, time_arr, start, j);
 	time_sort(array, time_arr, i, end);
-	return (time_arr);
 }
 
 long		**prepare_for_time_sort(char **content_of_dir, char *dir)
 {
 	struct stat buf;
-	int 		counter;
+	int			counter;
 	long		**time_arr;
-	int 		size_of_arr;
+	int			size_of_arr;
 	char		*for_check_file;
 
 	counter = 0;
@@ -55,8 +66,9 @@ long		**prepare_for_time_sort(char **content_of_dir, char *dir)
 	{
 		for_check_file = f_path(dir, content_of_dir[counter]);
 		lstat(for_check_file, &buf);
-		time_arr[counter] = (long*)malloc(sizeof(long) * 10);
+		time_arr[counter] = (long*)malloc(sizeof(long) * 11);
 		ft_memcpy(time_arr[counter], &buf.st_mtime, 10);
+		time_arr[counter][10] = '\0';
 		free(for_check_file);
 		counter++;
 	}
@@ -66,27 +78,44 @@ long		**prepare_for_time_sort(char **content_of_dir, char *dir)
 
 void		same_time(char **cont_of_dir, long **time_arr)
 {
-	int		chr_same_time;
-	int 	start;
-	int 	end;
-	int 	len_time_arr;
+	int		len_time_arr;
+	int		*arr;
 
+	arr = (int*)malloc(sizeof(int) * 4);
+	arr[0] = -1;
+	arr[1] = 0;
+	arr[2] = 0;
+	arr[3] = 0;
+	len_time_arr = len_d_arr(cont_of_dir);
+	for_break(arr, len_time_arr, time_arr, cont_of_dir);
+	free(arr);
+}
 
-	chr_same_time = 0;
-	start = 0;
-	end = 0;
-	len_time_arr = len_d_int_arr(time_arr);
-	while (chr_same_time < len_time_arr - 1)
+void		for_break(int *arr, int len, long **t, char **c)
+{
+	while (1)
 	{
-		if (*time_arr[chr_same_time] == *time_arr[chr_same_time + 1])
+		arr[3] = arr[2];
+		while ((++arr[0] < len - 1) && (arr[0] + 1 < len - 1))
 		{
-			start = chr_same_time;
-			while ((*time_arr[start] == *time_arr[chr_same_time + 1]) &&
-				(chr_same_time < len_time_arr - 2))
-				chr_same_time++;
-			end = chr_same_time + 1;
+			if (*t[arr[0]] == *t[arr[0] + 1])
+			{
+				arr[1] = arr[0];
+				break ;
+			}
 		}
-		ft_qsort_mode(cont_of_dir, start, end);
-		chr_same_time++;
+		arr[0] = arr[1];
+		while (arr[0] < len - 1)
+		{
+			while (*t[arr[0]] == *t[arr[0] + 1] \
+				&& (arr[0] + 1 < len - 1))
+				arr[0]++;
+			arr[2] = ((arr[0] == len - 2) && *t[len - 1] == *t[len - 2]) ? \
+			arr[0] + 1 : arr[0];
+			break ;
+		}
+		ft_qsort_mode(c, arr[1], arr[2]);
+		if (arr[3] == arr[2])
+			return ;
 	}
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   for_l_helper.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsarapin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/15 11:09:54 by vsarapin          #+#    #+#             */
+/*   Updated: 2018/03/15 11:09:58 by vsarapin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 void	rights_print(int mode, char *fullpath)
@@ -22,98 +34,68 @@ void	rights_print(int mode, char *fullpath)
 		rights[6] = rights[6] == '-' ? 'S' : 's';
 	if (S_ISVTX & mode)
 		rights[9] = rights[9] == '-' ? 'T' : 't';
-	ft_putstr(rights);
+	write(1, rights, 11);
 }
 
-void	num_of_hard(char **cont, char *fpath, char *file, char *dir)
+void	num_of_hard(char **c, char *f, char *dr, int *idgrs)
 {
 	struct stat buf;
-	int 		max_len_of_size;
+	char		*p;
 
-	max_len_of_size = right_distance_h_links(cont, dir);
-	lstat(fpath, &buf);
-	write(1, " ", 1);
-	while (--max_len_of_size + 1 > ft_intlen(buf.st_nlink))
-		write(1, " ", 1);
+	p = f_path(dr, f);
+	lstat(p, &buf);
+	write(1, "                    ", (idgrs[3] - ft_intlen(buf.st_nlink) + 1));
 	ft_putnbr(buf.st_nlink);
-	print_usrid(file, dir, cont);
-	print_group(file, dir, cont);
-	print_size(cont, fpath, dir);
-	print_date_time(fpath, file);
+	print_usrid(f, dr, idgrs[0]);
+	print_group(f, dr, idgrs[1]);
+	if (S_ISBLK(buf.st_mode) || S_ISCHR(buf.st_mode))
+	{
+		dev_print(p, c, dr, f);
+		free(p);
+		return ;
+	}
+	print_size(p, idgrs[2]);
+	print_date_time(p, f);
 	write(1, "\n", 1);
+	free(p);
 }
 
-void	print_usrid(char *file, char *dir, char **content_of_dir)
+void	print_usrid(char *file, char *dir, int pad)
 {
-	struct passwd 	*usr_name;
-	struct stat 	buf;
-	size_t 			max_len_of_size;
-	int 			counter;
+	struct passwd	*usr_name;
+	struct stat		buf;
 	char			*for_check_file;
 
-	counter = -1;
-	for_check_file = NULL;
-	while (content_of_dir[++counter])
-	{
-		for_check_file = f_path(dir, content_of_dir[counter]);
-		lstat(for_check_file, &buf);
-		usr_name = getpwuid(buf.st_uid);
-		if (max_len_of_size < ft_strlen(usr_name->pw_name))
-			max_len_of_size = ft_strlen(usr_name->pw_name);
-		free(for_check_file);
-	}
 	write(1, " ", 1);
 	for_check_file = f_path(dir, file);
 	lstat(for_check_file, &buf);
 	usr_name = getpwuid(buf.st_uid);
-	ft_putstr(usr_name->pw_name);
-	while (--max_len_of_size + 1 > ft_strlen(usr_name->pw_name))
-		write(1, " ", 1);
+	write(1, usr_name->pw_name, ft_strlen(usr_name->pw_name));
+	write(1, "                    ", (pad - ft_strlen(usr_name->pw_name) + 2));
 	free(for_check_file);
 }
 
-void	print_group(char *file, char *dir, char **content_of_dir)
+void	print_group(char *file, char *dir, int pad)
 {
-	struct group 	*gr_name;
-	struct stat 	buf;
-	int 			counter;
-	size_t 			max_len_of_size;
+	struct group	*gr_name;
+	struct stat		buf;
 	char			*for_check_file;
 
-	max_len_of_size = 0;
-	counter = -1;
-	while (content_of_dir[++counter])
-	{
-		for_check_file = f_path(dir, content_of_dir[counter]);
-		lstat(for_check_file, &buf);
-		gr_name = getgrgid(buf.st_gid);
-		if (max_len_of_size < ft_strlen(gr_name->gr_name))
-			max_len_of_size = ft_strlen(gr_name->gr_name);
-		free(for_check_file);
-	}
-	write(1, "  ", 2);
 	for_check_file = f_path(dir, file);
 	lstat(for_check_file, &buf);
 	gr_name = getgrgid(buf.st_gid);
-	ft_putstr(gr_name->gr_name);
-	while (--max_len_of_size + 1 > ft_strlen(gr_name->gr_name))
-		write(1, " ", 1);
+	write(1, gr_name->gr_name, ft_strlen(gr_name->gr_name));
+	write(1, "                    ", (pad - ft_strlen(gr_name->gr_name)));
 	free(for_check_file);
 }
 
-void	print_size(char **content_of_dir, char *file, char *dir)
+void	print_size(char *file, int pad)
 {
-	struct stat 	buf;
-	int 			max_len_of_size;
+	struct stat	buf;
 
-	max_len_of_size = right_distance(content_of_dir, dir);
-	lstat(file, &buf);
 	write(1, "  ", 2);
-	while (max_len_of_size > ft_intlen(buf.st_size))
-	{
-		write(1, " ", 1);
-		max_len_of_size--;
-	}
+	lstat(file, &buf);
+	write(1, "                    ", (pad - ft_intlen(buf.st_size)));
 	ft_putnbr(buf.st_size);
 	write(1, " ", 1);
 }

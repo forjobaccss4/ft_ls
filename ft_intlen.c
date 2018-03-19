@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   r_sort.c                                           :+:      :+:    :+:   */
+/*   ft_intlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsarapin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/15 11:15:13 by vsarapin          #+#    #+#             */
-/*   Updated: 2018/03/15 11:15:17 by vsarapin         ###   ########.fr       */
+/*   Created: 2017/11/20 14:13:28 by vsarapin          #+#    #+#             */
+/*   Updated: 2017/11/20 15:02:19 by vsarapin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		r_swap(char **array, int i, int j)
+int	ft_intlen(int n)
 {
-	char *tmp;
+	int	len;
 
-	tmp = array[i];
-	array[i] = array[j];
-	array[j] = tmp;
-	tmp = NULL;
-}
-
-char		**r_sort(char **array)
-{
-	int		start;
-	int		end;
-
-	start = 0;
-	end = len_d_arr(array) - 1;
-	while (start <= end)
+	len = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
 	{
-		r_swap(array, start, end);
-		start++;
-		end--;
+		n = -n;
+		len++;
 	}
-	return (array);
+	while (n)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
 }

@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   r_sort.c                                           :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsarapin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/15 11:15:13 by vsarapin          #+#    #+#             */
-/*   Updated: 2018/03/15 11:15:17 by vsarapin         ###   ########.fr       */
+/*   Created: 2017/11/05 14:14:23 by vsarapin          #+#    #+#             */
+/*   Updated: 2017/11/19 18:15:19 by vsarapin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		r_swap(char **array, int i, int j)
+char	*ft_strdup(const char *s1)
 {
-	char *tmp;
+	int		i;
+	int		j;
+	char	*s2;
 
-	tmp = array[i];
-	array[i] = array[j];
-	array[j] = tmp;
-	tmp = NULL;
-}
-
-char		**r_sort(char **array)
-{
-	int		start;
-	int		end;
-
-	start = 0;
-	end = len_d_arr(array) - 1;
-	while (start <= end)
+	i = ft_strlen(s1);
+	s2 = (char *)malloc(sizeof(char) * (i + 1));
+	if (s2 == NULL)
+		return (s2);
+	j = 0;
+	while (s1[j] != '\0')
 	{
-		r_swap(array, start, end);
-		start++;
-		end--;
+		s2[j] = s1[j];
+		j++;
 	}
-	return (array);
+	s2[j] = '\0';
+	return (s2);
 }

@@ -1,39 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   r_sort.c                                           :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsarapin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/15 11:15:13 by vsarapin          #+#    #+#             */
-/*   Updated: 2018/03/15 11:15:17 by vsarapin         ###   ########.fr       */
+/*   Created: 2017/10/30 15:38:26 by vsarapin          #+#    #+#             */
+/*   Updated: 2017/11/19 18:53:48 by vsarapin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		r_swap(char **array, int i, int j)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	char *tmp;
+	unsigned char	*a;
+	unsigned char	*b;
+	size_t			i;
 
-	tmp = array[i];
-	array[i] = array[j];
-	array[j] = tmp;
-	tmp = NULL;
-}
-
-char		**r_sort(char **array)
-{
-	int		start;
-	int		end;
-
-	start = 0;
-	end = len_d_arr(array) - 1;
-	while (start <= end)
+	a = (unsigned char *)dst;
+	b = (unsigned char *)src;
+	i = 0;
+	while (i < n)
 	{
-		r_swap(array, start, end);
-		start++;
-		end--;
+		a[i] = b[i];
+		i++;
 	}
-	return (array);
+	return (dst);
 }

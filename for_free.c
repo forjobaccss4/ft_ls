@@ -15,18 +15,17 @@
 void	free_double_array(char **need_free)
 {
 	int i;
-	int	len;
 
 	i = 0;
 	if (!need_free)
 		return ;
-	len = len_d_arr(need_free);
-	while (i < len)
+	while (need_free[i])
 	{
 		free(need_free[i]);
 		i++;
 	}
 	free(need_free);
+	need_free = NULL;
 }
 
 void	free_double_array_of_int(long **need_free)
@@ -44,9 +43,10 @@ void	free_double_array_of_int(long **need_free)
 		i++;
 	}
 	free(need_free);
+	need_free = NULL;
 }
 
-int				len_d_int_arr(long **array)
+int		len_d_int_arr(long **array)
 {
 	int i;
 
@@ -58,14 +58,45 @@ int				len_d_int_arr(long **array)
 	return (i);
 }
 
-void	free_double_arrays(char **ar_o, char **ar_t,char **ar_th,char **ar_f)
+void	free_d_arr(char **ar_o, char **ar_t, char **ar_th, char **ar_f)
 {
 	if (ar_o)
+	{
 		free_double_array(ar_o);
+		ar_o = NULL;
+	}
 	if (ar_t)
+	{
 		free_double_array(ar_t);
+		ar_t = NULL;
+	}
 	if (ar_th)
+	{
 		free_double_array(ar_th);
+		ar_th = NULL;
+	}
 	if (ar_f)
+	{
 		free_double_array(ar_f);
+		ar_f = NULL;
+	}
+}
+
+void	free_three_arrays(char **ar_o, char **ar_t, char **ar_th)
+{
+	if (ar_o)
+	{
+		free_double_array(ar_o);
+		ar_o = NULL;
+	}
+	if (ar_t)
+	{
+		free_double_array(ar_t);
+		ar_t = NULL;
+	}
+	if (ar_th)
+	{
+		free_double_array(ar_th);
+		ar_th = NULL;
+	}
 }

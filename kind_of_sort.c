@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   kind_of_sort.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsarapin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/15 11:11:46 by vsarapin          #+#    #+#             */
+/*   Updated: 2018/03/15 11:11:50 by vsarapin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 int		kind_of_srt(char **opts)
@@ -26,8 +38,8 @@ void	return_t_r_array(int kind_of_sort, char **content_of_dir, char *dir)
 	free_sort = NULL;
 	if (kind_of_sort == 1)
 	{
-		free_sort = time_sort(content_of_dir, \
-		prepare_for_time_sort(content_of_dir, dir), 0, len_d_arr(content_of_dir) - 1);
+		free_sort = prepare_for_time_sort(content_of_dir, dir);
+		time_sort(content_of_dir, free_sort, 0, len_d_arr(content_of_dir) - 1);
 		same_time(content_of_dir, free_sort);
 		free_double_array_of_int(free_sort);
 	}
@@ -38,8 +50,8 @@ void	return_t_r_array(int kind_of_sort, char **content_of_dir, char *dir)
 	}
 	if (kind_of_sort == 3)
 	{
-		free_sort = time_sort(content_of_dir, \
-		prepare_for_time_sort(content_of_dir, dir), 0, len_d_arr(content_of_dir) - 1);
+		free_sort = prepare_for_time_sort(content_of_dir, dir);
+		time_sort(content_of_dir, free_sort, 0, len_d_arr(content_of_dir) - 1);
 		same_time(content_of_dir, free_sort);
 		free_double_array_of_int(free_sort);
 		r_sort(content_of_dir);

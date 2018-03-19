@@ -1,39 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   r_sort.c                                           :+:      :+:    :+:   */
+/*   ft_ft_strjoin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsarapin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/15 11:15:13 by vsarapin          #+#    #+#             */
-/*   Updated: 2018/03/15 11:15:17 by vsarapin         ###   ########.fr       */
+/*   Created: 2017/11/10 10:20:43 by vsarapin          #+#    #+#             */
+/*   Updated: 2017/12/14 10:17:17 by vsarapin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		r_swap(char **array, int i, int j)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	char *tmp;
+	char	*res;
+	int		i;
 
-	tmp = array[i];
-	array[i] = array[j];
-	array[j] = tmp;
-	tmp = NULL;
-}
-
-char		**r_sort(char **array)
-{
-	int		start;
-	int		end;
-
-	start = 0;
-	end = len_d_arr(array) - 1;
-	while (start <= end)
+	i = 0;
+	if (!s1)
 	{
-		r_swap(array, start, end);
-		start++;
-		end--;
+		s1 = ft_strdup(s2);
+		return (s1);
 	}
-	return (array);
+	if ((res = (char*)malloc(sizeof(char) \
+		* (ft_strlen(s1) + ft_strlen(s2) + 1))))
+	{
+		while (*s1)
+		{
+			res[i++] = *s1;
+			s1++;
+		}
+		while (*s2)
+		{
+			res[i++] = *s2;
+			s2++;
+		}
+		res[i] = '\0';
+	}
+	return (res);
 }

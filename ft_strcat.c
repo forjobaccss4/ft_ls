@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   r_sort.c                                           :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsarapin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/15 11:15:13 by vsarapin          #+#    #+#             */
-/*   Updated: 2018/03/15 11:15:17 by vsarapin         ###   ########.fr       */
+/*   Created: 2017/11/05 14:37:47 by vsarapin          #+#    #+#             */
+/*   Updated: 2017/11/19 14:24:57 by vsarapin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		r_swap(char **array, int i, int j)
+char	*ft_strcat(char *s1, const char *s2)
 {
-	char *tmp;
+	size_t	length;
+	int		i;
 
-	tmp = array[i];
-	array[i] = array[j];
-	array[j] = tmp;
-	tmp = NULL;
-}
-
-char		**r_sort(char **array)
-{
-	int		start;
-	int		end;
-
-	start = 0;
-	end = len_d_arr(array) - 1;
-	while (start <= end)
+	length = ft_strlen(s1);
+	i = 0;
+	while (s2[i] != '\0')
 	{
-		r_swap(array, start, end);
-		start++;
-		end--;
+		s1[length + i] = s2[i];
+		i++;
 	}
-	return (array);
+	s1[length + i] = '\0';
+	return (s1);
 }
