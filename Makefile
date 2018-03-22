@@ -2,7 +2,7 @@ NAME = ft_ls
 PATH_SRC = ./
 
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror -I $(PATH_SRC)
+CFLAGS = -Wall -Wextra -Werror -I $(PATH_SRC)
 SRC = 			$(PATH_SRC)ft_strcat.c \
 				$(PATH_SRC)ft_bzero.c \
 				$(PATH_SRC)ft_putnbr.c \

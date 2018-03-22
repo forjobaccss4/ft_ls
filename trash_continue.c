@@ -16,8 +16,8 @@ void	treatment_of_errors_help(char **found_err_in_input)
 {
 	int i;
 
-	i = -1;
-	while (++i < len_d_arr(found_err_in_input))
+	i = 0;
+	while (i < len_d_arr(found_err_in_input))
 	{
 		if (!ft_strcmp(found_err_in_input[i], ""))
 		{
@@ -26,6 +26,7 @@ void	treatment_of_errors_help(char **found_err_in_input)
 		}
 		write(2, "ls: ", 4);
 		perror(found_err_in_input[i]);
+		i++;
 	}
 }
 

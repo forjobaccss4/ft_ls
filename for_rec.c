@@ -43,9 +43,7 @@ char		*f_path(char *path, char *d_name)
 
 	ft_strcpy(fpath, path);
 	if (fpath[ft_strlen(path + 1)] != '/')
-	{
 		fpath[ft_strlen(path)] = '/';
-	}
 	fpath[ft_strlen(path) + 1] = '\0';
 	ft_strcat(fpath, d_name);
 	returned = ft_strdup(fpath);

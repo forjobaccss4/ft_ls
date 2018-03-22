@@ -25,7 +25,7 @@ void	print_l_opt_trig(char **cont, char *dir, int trig)
 	int	*need_for_norms;
 
 	counter = -1;
-	need_for_norms = (int*)malloc(sizeof(int) * ((len_d_arr(cont) * 3) + 4));
+	need_for_norms = (int*)malloc(sizeof(int) * 4);
 	if (!trig)
 	{
 		l_in_right_way(cont, dir);
@@ -40,7 +40,10 @@ void	print_l_opt_trig(char **cont, char *dir, int trig)
 		if (cont)
 			print_long_format(cont, dir, counter, need_for_norms);
 		else
+		{
+			free(need_for_norms);
 			return ;
+		}
 	}
 }
 
